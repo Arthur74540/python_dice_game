@@ -1,35 +1,51 @@
 import random
 import sys
 
+def search(text, nb):
+    count = counter.count(nb)
+    if count > 0:
+        print(str(count)+' '+text)
+
 counter = []
 for i in range(7):
     counter.append(0)
 
-dicesValues = []
-nbofdices = int(input("With how much dices do you want to play?"))
+dices = []
+nb = 4
 if len(sys.argv) > 1:
-    nbofdices = int(sys.argv[1])
+    nb = int(sys.argv[1])
 
-for i in range(nbofdices):
-    dicesValues.append(random.randint(1,6))
+for i in range(nb):
+    dices.append(random.randint(1,6))
 
-print(dicesValues)
-print(sorted(dicesValues))
+def counter():
+    totalcounter = 0
+    for i in range(3):
+        if sorted(dices)[i] == sorted(dices[i+1]):
+            totalcounter = totalcounter + 1           
 
-for dice in dicesValues:
+print(dices)
+print(sorted(dices))
+
+for dice in dices:
     counter[dice] += 1
 
-print(counter)
 
-for i in range(7):
-    if counter[i] == nbofdices:
-        print(nbofdices,"the same")
-        
-checking = False
-while checking == False:
-    if counter[i] == 1:
-        checking = True
-        print("run of",nbofdices)
+search("Four the same", 4)
+search("Three the same", 3)
+search("Pair", 2)
+
+counter()
+if totalcounter == 3:
+    print("Run of four")
+elif totalcounter == 2 and search("Pair", 2):
+    print("Run of three with a pair")
+elif totalcounter == 2:
+    print("Run of three")
+elif totalcounter == 0 and search("Pair", 2):
+    print("Two pairs")
+else:
+    print("All different")
 
 
     
